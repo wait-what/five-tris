@@ -11,7 +11,7 @@ mold -run cargo run # shell2batch: cargo run
 [tasks.mangohud]
 script_runner = "@shell"
 script = '''
-vblank_mode=0 mold -run cargo run --release
+vblank_mode=0 MANGOHUD_DLSYM=1 mold -run cargo run --release
 '''
 
 # Release
