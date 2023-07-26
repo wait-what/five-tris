@@ -26,7 +26,7 @@ impl ActivePiece {
         let piece_width = piece_rules.shape[0].width as isize;
         let piece_height = piece_rules.shape[0].height as isize;
 
-        let x = (board_width) / 2 - piece_width;
+        let x = (board_width) / 2 - piece_width + 1; // TODO: Fix this
         let y = board_height;
 
         Self {

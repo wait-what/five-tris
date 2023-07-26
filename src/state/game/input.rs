@@ -18,15 +18,15 @@ impl Game {
 
         if let Some(mut active_piece) = self.active_piece.take() {
             // Movement
-            if is_key_pressed(KeyCode::Kp4) {
+            if is_key_pressed(KeyCode::Kp4) || is_key_pressed(KeyCode::Left) {
                 // Left
                 active_piece.left(&self.board);
             }
-            if is_key_pressed(KeyCode::Kp6) {
+            if is_key_pressed(KeyCode::Kp6) || is_key_pressed(KeyCode::Right) {
                 // Right
                 active_piece.right(&self.board);
             }
-            if is_key_pressed(KeyCode::Kp5) {
+            if is_key_pressed(KeyCode::Kp5) || is_key_pressed(KeyCode::Down) {
                 // Soft drop
                 active_piece.drop(&self.board);
             }
@@ -51,21 +51,21 @@ impl Game {
             }
 
             // Rotation
-            if is_key_pressed(KeyCode::A) {
+            if is_key_pressed(KeyCode::Q) || is_key_pressed(KeyCode::LeftControl) || is_key_pressed(KeyCode::Z) {
                 // CCW
                 active_piece.rotate_by(3, &self.board);
             }
-            if is_key_pressed(KeyCode::D) {
+            if is_key_pressed(KeyCode::E) || is_key_pressed(KeyCode::X) || is_key_pressed(KeyCode::Up) {
                 // CW
                 active_piece.rotate_by(1, &self.board);
             }
-            if is_key_pressed(KeyCode::S) {
+            if is_key_pressed(KeyCode::W) || is_key_pressed(KeyCode::A) {
                 // 180
                 active_piece.rotate_by(2, &self.board);
             }
 
             // Hold
-            if is_key_pressed(KeyCode::LeftShift) {
+            if is_key_pressed(KeyCode::LeftShift) || is_key_pressed(KeyCode::C) {
                 match self.hold_piece.clone() {
                     None => {
                         self.hold_piece = Some(active_piece.name.clone());
