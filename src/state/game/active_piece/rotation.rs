@@ -21,6 +21,7 @@ const ROTATIONS: [[u8; 2]; 12] = [
 pub enum RotationResult {
     Normal,
     Tspin,
+    Kick,
 }
 
 impl ActivePiece {
@@ -33,13 +34,22 @@ impl ActivePiece {
         let kick_table = ROTATIONS.iter().position(|&x| x == [from as u8, to as u8]).unwrap();
         let kick_table = &self.kick_tables[kick_table];
 
-        for kick in kick_table.iter() {
-            if !shape.collides_at(self.x + kick.0, self.y + kick.1, board) {
+        for (i, kick) in kick_table.iter().enumerate() {
+            if !shape.collides_at(self.x + kick.0, self.y - kick.1, board) {
                 self.x += kick.0;
-                self.y += kick.1;
+                self.y -= kick.1;
                 self.rotation = to;
 
-                return Ok(RotationResult::Normal);
+                if i == 0 {
+                    // TODO check for tspin
+                    if false {
+                        return Ok(RotationResult::Tspin);
+                    }
+
+                    return Ok(RotationResult::Normal);
+                } else {
+                    return Ok(RotationResult::Kick);
+                }
             }
         }
 

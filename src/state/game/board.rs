@@ -20,8 +20,14 @@ impl Board {
         self.0[y][x] = Some(BoardTile { color });
     }
 
-    pub fn get(&self, x: usize, y: usize) -> Option<BoardTile> {
-        self.0[y][x]
+    pub fn get(&self, x: usize, y: usize) -> Result<Option<BoardTile>, ()> {
+        match self.0.get(y) {
+            Some(row) => match row.get(x) {
+                Some(tile) => Ok(*tile),
+                None => Err(()),
+            },
+            None => Err(()),
+        }
     }
 
     pub fn iter(&self) -> impl Iterator<Item = &Vec<Option<BoardTile>>> {

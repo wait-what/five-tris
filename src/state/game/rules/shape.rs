@@ -99,22 +99,18 @@ impl Shape {
         for (y, row) in self.iter().enumerate() {
             for (x, tile) in row.iter().enumerate() {
                 if tile.filled {
-                    if (piece_x + (x as isize) < 0)
-                        || (piece_x + x as isize >= board.size().0 as isize)
-                        || (piece_y + (y as isize) < 0)
-                        || (piece_y + y as isize >= board.size().1 as isize)
-                    {
-                        return true;
-                    }
+                    let tile = board.get(
+                        (x as isize + piece_x) as usize,
+                        (y as isize + piece_y) as usize,
+                    );
 
-                    if board
-                        .get(
-                            (x as isize + piece_x) as usize,
-                            (y as isize + piece_y) as usize,
-                        )
-                        .is_some()
-                    {
-                        return true;
+                    match tile {
+                        Ok(tile) => {
+                            if tile.is_some() {
+                                return true;
+                            }
+                        }
+                        Err(_) => return true,
                     }
                 }
             }

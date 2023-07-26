@@ -19,9 +19,9 @@ impl Game {
             let x = x as f32 * tile_size;
 
             draw_line(
-                x,
+                x + tile_size * 5.0,
                 tile_size * 3.0, // 3 tile offset
-                x,
+                x + tile_size * 5.0,
                 (height as f32) * tile_size + tile_size * 3.0,
                 line_width,
                 color_u8!(0xff, 0xff, 0xff, 0xff),
@@ -33,9 +33,9 @@ impl Game {
             let y = (y + 3) as f32 * tile_size;
 
             draw_line(
-                0.0,
+                tile_size * 5.0,
                 y,
-                (width as f32) * tile_size,
+                (width as f32) * tile_size + tile_size * 5.0,
                 y,
                 line_width,
                 color_u8!(0xff, 0xff, 0xff, 0xff),
@@ -51,7 +51,7 @@ impl Game {
             for (x, tile) in row.iter().enumerate() {
                 // Draw board
                 if let Some(piece) = tile {
-                    let x = x as f32 * tile_size;
+                    let x = x as f32 * tile_size + tile_size * 5.0;
                     let y = (y - (20 - 3)) as f32 * tile_size;
 
                     draw_rectangle(x, y, tile_size, tile_size, piece.color);
@@ -69,7 +69,7 @@ impl Game {
                     if tile.filled {
                         let color: Color = active_piece_rules.color;
                         draw_rectangle(
-                            (x as isize + active_piece.x) as f32 * tile_size,
+                            (x as isize + active_piece.x) as f32 * tile_size + tile_size * 5.0,
                             (y as isize + active_piece.y - (20 - 3)) as f32 * tile_size,
                             tile_size,
                             tile_size,
@@ -79,5 +79,8 @@ impl Game {
                 }
             }
         }
+
+        // Draw queue (5 items)
+
     }
 }
